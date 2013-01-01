@@ -3,6 +3,8 @@ Arduino-LED-Chaser
 
 Arduino LED Chaser with Buttons
 
+Demo Video: https://www.youtube.com/watch?v=pIHpoEE0R98
+
 This circuit has 6 LEDs and 3 buttons, the LEDs are arranged in a circle
 
 The LEDs are connected to PWM outputs and their brightness is continuously adjusted on a sine wave pattern
