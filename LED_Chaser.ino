@@ -35,10 +35,11 @@ int delayTime = 100;                           // How many iterations of the mai
 int delayIncrement = 20;                       // When the faster/slower buttons are pushed, delayTime is changed by this much
 
 void setup() {
-    for( int i=0; i < numButtons; i++ ) {      // Set the button pins to be inputs
+    for (int i = 0; i < numButtons; i++) {      // Set the button pins to be inputs
         pinMode(buttonPin[i], INPUT);
     }
-    for( int i=0; i < numLEDs; i++ ) {         // Set the LED pins to be outputs
+
+    for (int i = 0; i < numLEDs; i++) {         // Set the LED pins to be outputs
         pinMode(ledPin[i], OUTPUT);
     }
 }
@@ -47,34 +48,34 @@ void setup() {
  * MAIN LOOP 
  ***************************************************************/
 void loop() {
-    if( buttonPressed(0) && delayTime >= delayIncrement ) {  // If button 1 has been pressed increase the speed
-        if( delayTime -delayIncrement < 0 ) {
+    if (buttonPressed(0) && delayTime >= delayIncrement) {  // If button 1 has been pressed increase the speed
+        if (delayTime - delayIncrement < 0) {
             delayTime = 0;
         } else {
-            delayTime = delayTime -delayIncrement;
+            delayTime -= delayIncrement;
         }
     }
 
-    if( buttonPressed(1) ) {                       // If button 2 has been pressed decrease the speed
-        delayTime = delayTime +delayIncrement;
+    if (buttonPressed(1)) {                       // If button 2 has been pressed decrease the speed
+        delayTime += delayIncrement;
     }
 
-    if( buttonPressed(2) ) {                       // If button 3 has been pressed reverse the direction of rotation
+    if (buttonPressed(2)) {                       // If button 3 has been pressed reverse the direction of rotation
         increment = -increment;
     }
 
-    if( loopCounter >= delayTime ) {             // If the number of main loop iterations is high enough then change the LEDs
+    if (loopCounter >= delayTime) {             // If the number of main loop iterations is high enough then change the LEDs
         float phase = 0;
-        angle = angle +increment;
+        angle += increment;
         
-        for( int i=0; i<numLEDs; i++ ) {         // For each LED
-            analogWrite(ledPin[i], (128*sin(angle+phase)+128) ); // Set the LED brightness using a sin() function
-            phase = phase +pi/3;                // After setting each LED we increase the phase by 60 degrees
+        for (int i = 0; i < numLEDs; i++) {         // For each LED
+            analogWrite(ledPin[i], (128*sin(angle+phase)+128)); // Set the LED brightness using a sin() function
+            phase += pi/3;                // After setting each LED we increase the phase by 60 degrees
         }
-        loopCounter=0;                          // Reset the main loop counter
+        loopCounter = 0;                          // Reset the main loop counter
         
     } else {                                    // Otherwise increment the counter
-        loopCounter = loopCounter +1;
+        loopCounter++;
     }
 }
 
@@ -88,12 +89,11 @@ void loop() {
  * A button must be released and pressed again before it will be noticed again
  */
 boolean buttonPressed(int button) {
-    
-    if( digitalRead(buttonPin[button]) == HIGH && buttonState[button] == false ) {
+    if (digitalRead(buttonPin[button]) == HIGH && buttonState[button] == false) {
         // The button has been pressed since we last checked it
         buttonState[button] = true;
         return true;
-    } else if( digitalRead(buttonPin[button]) == LOW && buttonState[button] == true ) {
+    } else if (digitalRead(buttonPin[button]) == LOW && buttonState[button] == true) {
         // The button has been released since we last checked it
         buttonState[button] = false;
     }
